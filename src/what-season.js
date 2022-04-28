@@ -11,15 +11,16 @@ const { NotImplementedError } = require('../extensions/index.js');
  * getSeason(new Date(2020, 02, 31)) => 'spring'
  * 
  */
-function getSeason(date) {
-  if (date instanceof Date == false) {
-   throw new NotImplementedError('Invalid date!');
- }
- if (isNaN(date.getTime())) {
-   throw new NotImplementedError('Invalid date!');
- }
 
- let month = date.getMonth();
+
+function getSeason(date) {
+  if(date === undefined){
+    return 'Unable to determine the time of year!'
+  }
+  try{
+    let month = date.getMonth();
+    let year = date.getUTCFullYear();
+  if(((date instanceof Date))){   
  if ( month == 11 || month == 0 || month == 1) {
  return 'winter'
  }
@@ -30,8 +31,15 @@ function getSeason(date) {
  return 'summer'
  }
  if (month == 8 || month == 9 || month == 10) {
- return 'autumn'
+ return 'fall'
  }
+    }
+    else{
+    throw new Error('Invalid date!')
+    }
+    }catch{
+  throw new Error('Invalid date!')
+}
 }
 
 module.exports = {

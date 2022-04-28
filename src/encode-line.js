@@ -12,20 +12,23 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 
 function encodeLine(str) {
-  str =  Array.from(str.split('').reduce((item, el) => {
-    item.set(el, (item.get(el) || 0) + 1);
-    return item;
-      console.log(item)
-  }, new Map()));
-  str.forEach(el => {
-      [el[0], el[1]] = [el[1], el[0]]
-  });
-  str = str.join('').replace(/,/g,'')
-  return str;
-}
+
+  str = str.split('');
+  let newStr = '';
+  let count = 1;
+  for (let i = 0; i < str.length; i++) {
+  if (str[i] == str[i+1]) {
+    count = count + 1;
+  } else if(str[i] != str[i+1]) {
+  let countAlt = (count > 1) ? count: '';
+  newStr += countAlt + str[i];
+  count = 1;
+  }
+  }
+  return newStr;
+  }
 
 
 module.exports = {
   encodeLine
 };
-
